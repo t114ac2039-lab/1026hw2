@@ -3,18 +3,18 @@
 const int RledPin = 9;        // the PWM pin the Red LED is attached to
 const int GledPin = 10;       // the PWM pin the Green LED is attached to
 const int BledPin = 11;       // the PWM pin the Blue LED is attached to
-const int buttonPin = 2;      // 按鈕腳位宣告 (請依實際電路修改腳位)
+const int buttonPin = 2;      // 
 
 int mood = 0;                          // the toy's mood state
 const int neutralMood = 10;            // the neutral mood state
 int buttonState = 0;                   // Button Current State
 bool ButtonPressed = false;            // Has the button been pressed or not
 
-unsigned long touchedTimer = 0;        // 紀錄最後一次拍打時間
-unsigned long reducedTimer = 0;        // 紀錄最後一次扣分時間
+unsigned long touchedTimer = 0;        // 
+unsigned long reducedTimer = 0;        // 
 
-const long unTouchInterval = 5000;     // 超過 5 秒未拍打開始扣分/檢查呼吸燈
-const long reducedInterval = 1000;     // 扣分間隔 (1秒)
+const long unTouchInterval = 5000;     // 
+const long reducedInterval = 1000;     // 
 
 // 控制 RGB LED 情緒顏色的函數
 void showLEDState(int state) {
@@ -47,14 +47,14 @@ void setup() {
   pinMode(GledPin, OUTPUT);
   pinMode(BledPin, OUTPUT);
 
-  // 初始化 mood 狀態
+ 
   mood = neutralMood;
 }
 
 void loop() {
   unsigned long currentTimer = millis();
 
-  // 1. 讀取與處理按鈕/拍打狀態
+ 
   buttonState = digitalRead(buttonPin);
 
   if (buttonState == HIGH && !ButtonPressed) {
@@ -71,7 +71,7 @@ void loop() {
     ButtonPressed = false;
   }
 
-  // 2. 判斷是否需要自動扣分 (超過 5 秒未拍打)
+ 
   if (currentTimer - touchedTimer > unTouchInterval) {
     if (currentTimer - reducedTimer > reducedInterval) {
       mood = mood - 1;
@@ -80,7 +80,7 @@ void loop() {
     }
   }
 
-  // 3. 燈光顯示邏輯：
+  
   // 只有當「超過 5 秒未拍打」且「Mood 已經扣到最低 (0)，顏色不再變換」時，才執行呼吸燈
   if ((currentTimer - touchedTimer > unTouchInterval) && (mood == 0)) {
     showBreathingWhite();
